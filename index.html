@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Services</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Particles Canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- Animated Blobs -->
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <ul id="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#factors">Why Choose Me</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- About Section -->
+  <section id="about" class="fade-in glass-section">
+    <h1>Hi, I'm Anup</h1>
+    <p>I create modern, responsive websites that help businesses grow online.</p>
+  </section>
+
+  <!-- Dynamic SVG Wave -->
+  <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" id="wave1">
+    <path fill="#F5F5DC" d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"></path>
+  </svg>
+
+  <!-- Services Section -->
+  <section id="services" class="fade-in glass-section">
+    <h2>My Services</h2>
+    <div class="services-container" id="services-container"></div>
+  </section>
+
+  <!-- Dynamic SVG Wave -->
+  <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" id="wave2">
+    <path fill="#FFD700" d="M0,50 C360,-50 1080,150 1440,50 L1440,100 L0,100 Z"></path>
+  </svg>
+
+  <!-- Key Factors Section -->
+  <section id="factors" class="fade-in glass-section">
+    <h2>Why Choose Me</h2>
+    <ul class="factors-list">
+      <li><i class="fas fa-bolt"></i> Fast & Responsive Websites</li>
+      <li><i class="fas fa-code"></i> Clean Code & SEO Optimized</li>
+      <li><i class="fas fa-paint-brush"></i> Modern Design & UX</li>
+      <li><i class="fas fa-clock"></i> Reliable & On-Time Delivery</li>
+    </ul>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="fade-in glass-section">
+    <h2>Contact Me</h2>
+    <form id="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send <i class="fas fa-paper-plane"></i></button>
+    </form>
+    <p id="form-message"></p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
 <!-- index.html placeholder -->
