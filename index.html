@@ -74,6 +74,14 @@
   </section>
 
   <script src="script.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/3b3f8dd7-2c9f-4d2a-9bff-19285949ffcb/chat'
+	});
+</script>
 </body>
 </html>
 <!-- index.html placeholder -->
