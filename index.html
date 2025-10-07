@@ -1,24 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Development Services</title>
-  <!-- Font Awesome for icons -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anup Rijal | Web Development Services</title>
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Inline CSS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #f5f5dc, #ffffff);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 1rem;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    section {
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .glass-section {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin: 50px auto;
+      max-width: 900px;
+      padding: 40px 20px;
+    }
+
+    .services-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .services-container div {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .services-container div:hover {
+      transform: scale(1.05);
+    }
+
+    .wave {
+      display: block;
+      width: 100%;
+      margin-top: -1px;
+    }
+
+    .factors-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .factors-list li {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    /* Chatbot Styles */
+    #chatbot-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s;
+      z-index: 9999;
+    }
+
+    #chatbot-toggle:hover {
+      background: #0056b3;
+    }
+
+    #chatbot {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      max-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      z-index: 9999;
+    }
+
+    #chatbot.hidden {
+      display: none;
+    }
+
+    #chatbot .header {
+      background: #333;
+      color: #fff;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    #chatbot-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-messages div {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid #eee;
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    #chatbot-form button {
+      border: none;
+      background: #007bff;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    #chatbot-form button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- Particles Canvas -->
-  <canvas id="particles"></canvas>
-
-  <!-- Animated Blobs -->
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
-
-  <!-- Navigation -->
   <nav>
     <ul id="nav-links">
       <li><a href="#about">About</a></li>
@@ -28,29 +216,28 @@
     </ul>
   </nav>
 
-  <!-- About Section -->
   <section id="about" class="fade-in glass-section">
-    <h1>Hi, I'm Anup</h1>
+    <h1>Hi, I'm Anup 👋</h1>
     <p>I create modern, responsive websites that help businesses grow online.</p>
   </section>
 
-  <!-- Dynamic SVG Wave -->
   <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" id="wave1">
     <path fill="#F5F5DC" d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"></path>
   </svg>
 
-  <!-- Services Section -->
   <section id="services" class="fade-in glass-section">
     <h2>My Services</h2>
-    <div class="services-container" id="services-container"></div>
+    <div class="services-container" id="services-container">
+      <div><i class="fas fa-code"></i><h3>Website Development</h3><p>Building fast, responsive, and SEO-optimized sites.</p></div>
+      <div><i class="fas fa-paint-brush"></i><h3>UI/UX Design</h3><p>Designing intuitive and visually stunning interfaces.</p></div>
+      <div><i class="fas fa-server"></i><h3>Automation & AI</h3><p>Integrating workflows and intelligent chatbots.</p></div>
+    </div>
   </section>
 
-  <!-- Dynamic SVG Wave -->
   <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" id="wave2">
     <path fill="#FFD700" d="M0,50 C360,-50 1080,150 1440,50 L1440,100 L0,100 Z"></path>
   </svg>
 
-  <!-- Key Factors Section -->
   <section id="factors" class="fade-in glass-section">
     <h2>Why Choose Me</h2>
     <ul class="factors-list">
@@ -61,172 +248,62 @@
     </ul>
   </section>
 
+  <!-- Chatbot -->
+  <button id="chatbot-toggle">💬</button>
 
-<!-- Chatbot Toggle Button -->
-<button id="chatbot-toggle" class="chatbot-toggle">💬</button>
-
-<!-- Chatbot Container -->
-<div id="chatbot" class="chatbot-container hidden">
-  <div class="chatbot-header">
-    <span>Anup’s AI Chatbot 🤖</span>
-    <button id="chatbot-close" class="chatbot-close">✖</button>
+  <div id="chatbot" class="hidden">
+    <div class="header">
+      <span>Anup’s AI Chatbot 🤖</span>
+      <button id="chatbot-close" style="background:none;border:none;color:white;cursor:pointer;">✖</button>
+    </div>
+    <div id="chatbot-messages"></div>
+    <form id="chatbot-form">
+      <input id="chatbot-input" type="text" placeholder="Type a message..." />
+      <button type="submit">Send</button>
+    </form>
   </div>
-  <div id="chatbot-messages" class="chatbot-messages"></div>
-  <form id="chatbot-form" class="chatbot-form">
-    <input id="chatbot-input" type="text" placeholder="Type a message..." required />
-    <button type="submit">Send</button>
-  </form>
-</div>
 
-<style>
-/* ===== Chatbot Styles ===== */
-.chatbot-toggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 22px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  z-index: 9999;
-  transition: background 0.3s;
-}
-.chatbot-toggle:hover {
-  background-color: #1d4ed8;
-}
+  <script>
+    const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
+    const chatbot = document.getElementById("chatbot");
+    const toggleBtn = document.getElementById("chatbot-toggle");
+    const closeBtn = document.getElementById("chatbot-close");
+    const form = document.getElementById("chatbot-form");
+    const input = document.getElementById("chatbot-input");
+    const messagesDiv = document.getElementById("chatbot-messages");
 
-.chatbot-container {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  width: 320px;
-  max-height: 70vh;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 9999;
-  border: 1px solid #ddd;
-}
-.chatbot-container.hidden {
-  display: none;
-}
+    toggleBtn.addEventListener("click", () => chatbot.classList.toggle("hidden"));
+    closeBtn.addEventListener("click", () => chatbot.classList.add("hidden"));
 
-.chatbot-header {
-  background: #111827;
-  color: #fff;
-  padding: 10px 14px;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-}
-.chatbot-close {
-  background: none;
-  border: none;
-  color: #ccc;
-  font-size: 16px;
-  cursor: pointer;
-}
-.chatbot-close:hover {
-  color: #fff;
-}
+    function addMessage(sender, text) {
+      const msg = document.createElement("div");
+      msg.className = sender === "user" ? "text-right text-blue-600" : "text-left text-gray-800";
+      msg.textContent = text;
+      messagesDiv.appendChild(msg);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
 
-.chatbot-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
-  font-size: 14px;
-  background: #f9f9f9;
-}
-.chatbot-messages div {
-  margin: 6px 0;
-  line-height: 1.4;
-}
-.chatbot-messages .user {
-  text-align: right;
-  color: #2563eb;
-}
-.chatbot-messages .bot {
-  text-align: left;
-  color: #333;
-}
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+      addMessage("user", message);
+      input.value = "";
+      addMessage("bot", "Thinking...");
 
-.chatbot-form {
-  display: flex;
-  border-top: 1px solid #ddd;
-}
-.chatbot-form input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  font-size: 14px;
-  outline: none;
-}
-.chatbot-form button {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  padding: 0 14px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.chatbot-form button:hover {
-  background: #1d4ed8;
-}
-</style>
-
-<script>
-const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
-const chatbot = document.getElementById("chatbot");
-const toggleBtn = document.getElementById("chatbot-toggle");
-const closeBtn = document.getElementById("chatbot-close");
-const form = document.getElementById("chatbot-form");
-const input = document.getElementById("chatbot-input");
-const messagesDiv = document.getElementById("chatbot-messages");
-
-toggleBtn.addEventListener("click", () => chatbot.classList.toggle("hidden"));
-closeBtn.addEventListener("click", () => chatbot.classList.add("hidden"));
-
-function addMessage(sender, text) {
-  const msg = document.createElement("div");
-  msg.className = sender;
-  msg.textContent = text;
-  messagesDiv.appendChild(msg);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const message = input.value.trim();
-  if (!message) return;
-
-  addMessage("user", message);
-  input.value = "";
-  addMessage("bot", "Thinking...");
-
-  try {
-    const res = await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
+      try {
+        const res = await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+        const data = await res.json();
+        messagesDiv.lastChild.textContent = data.reply || "No reply 😕";
+      } catch (err) {
+        messagesDiv.lastChild.textContent = "⚠️ Error connecting to chatbot.";
+      }
     });
-    const data = await res.json();
-    messagesDiv.lastChild.textContent = data.reply || "No reply 😕";
-  } catch {
-    messagesDiv.lastChild.textContent = "⚠️ Error connecting to chatbot.";
-  }
-});
-</script>
+  </script>
 
 </body>
 </html>
-
