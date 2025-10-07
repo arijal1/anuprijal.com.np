@@ -63,26 +63,129 @@
 
 
 <!-- Chatbot Toggle Button -->
-<button id="chatbot-toggle"
-  class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 z-50">
-  💬
-</button>
+<button id="chatbot-toggle" class="chatbot-toggle">💬</button>
 
-<!-- Chatbot Container (Hidden by Default) -->
-<div id="chatbot" class="hidden fixed bottom-20 right-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg w-80 max-h-[70vh] flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700 z-50">
-  <div class="p-3 bg-gray-800 text-white text-sm font-semibold flex justify-between items-center">
+<!-- Chatbot Container -->
+<div id="chatbot" class="chatbot-container hidden">
+  <div class="chatbot-header">
     <span>Anup’s AI Chatbot 🤖</span>
-    <button id="chatbot-close" class="text-gray-300 hover:text-white">✖</button>
+    <button id="chatbot-close" class="chatbot-close">✖</button>
   </div>
-  <div id="chatbot-messages" class="flex-1 overflow-y-auto p-3 text-sm space-y-2"></div>
-  <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
-    <input id="chatbot-input" type="text" placeholder="Type a message..." class="flex-1 p-2 text-sm bg-transparent outline-none text-gray-800 dark:text-gray-100" />
-    <button type="submit" class="px-3 text-blue-600 font-bold">Send</button>
+  <div id="chatbot-messages" class="chatbot-messages"></div>
+  <form id="chatbot-form" class="chatbot-form">
+    <input id="chatbot-input" type="text" placeholder="Type a message..." required />
+    <button type="submit">Send</button>
   </form>
 </div>
 
+<style>
+/* ===== Chatbot Styles ===== */
+.chatbot-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 9999;
+  transition: background 0.3s;
+}
+.chatbot-toggle:hover {
+  background-color: #1d4ed8;
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 320px;
+  max-height: 70vh;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  border: 1px solid #ddd;
+}
+.chatbot-container.hidden {
+  display: none;
+}
+
+.chatbot-header {
+  background: #111827;
+  color: #fff;
+  padding: 10px 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.chatbot-close {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 16px;
+  cursor: pointer;
+}
+.chatbot-close:hover {
+  color: #fff;
+}
+
+.chatbot-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 14px;
+  background: #f9f9f9;
+}
+.chatbot-messages div {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+.chatbot-messages .user {
+  text-align: right;
+  color: #2563eb;
+}
+.chatbot-messages .bot {
+  text-align: left;
+  color: #333;
+}
+
+.chatbot-form {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+.chatbot-form input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+  outline: none;
+}
+.chatbot-form button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 0 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.chatbot-form button:hover {
+  background: #1d4ed8;
+}
+</style>
+
 <script>
-const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook-test/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
+const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
 const chatbot = document.getElementById("chatbot");
 const toggleBtn = document.getElementById("chatbot-toggle");
 const closeBtn = document.getElementById("chatbot-close");
@@ -90,19 +193,12 @@ const form = document.getElementById("chatbot-form");
 const input = document.getElementById("chatbot-input");
 const messagesDiv = document.getElementById("chatbot-messages");
 
-toggleBtn.addEventListener("click", () => {
-  chatbot.classList.toggle("hidden");
-});
-
-closeBtn.addEventListener("click", () => {
-  chatbot.classList.add("hidden");
-});
+toggleBtn.addEventListener("click", () => chatbot.classList.toggle("hidden"));
+closeBtn.addEventListener("click", () => chatbot.classList.add("hidden"));
 
 function addMessage(sender, text) {
   const msg = document.createElement("div");
-  msg.className = sender === "user" 
-    ? "text-right text-blue-600 my-1"
-    : "text-left text-gray-700 dark:text-gray-300 my-1";
+  msg.className = sender;
   msg.textContent = text;
   messagesDiv.appendChild(msg);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -125,13 +221,11 @@ form.addEventListener("submit", async (e) => {
     });
     const data = await res.json();
     messagesDiv.lastChild.textContent = data.reply || "No reply 😕";
-  } catch (err) {
+  } catch {
     messagesDiv.lastChild.textContent = "⚠️ Error connecting to chatbot.";
   }
 });
 </script>
-
-
 
 </body>
 </html>
