@@ -127,4 +127,29 @@
       msg.className = sender === "user" ? "text-right text-blue-600 my-1" : "text-left text-gray-700 my-1";
       msg.textContent = text;
       messagesDiv.appendChild(msg);
-      messagesDiv.scrollTop = messages
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+      addMessage("user", message);
+      input.value = "";
+      addMessage("bot", "Thinking...");
+      try {
+        const res = await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+        const data = await res.json();
+        messagesDiv.lastChild.textContent = data.reply || "No reply 😕";
+      } catch (err) {
+        messagesDiv.lastChild.textContent = "⚠️ Error connecting to chatbot.";
+      }
+    });
+  </script>
+
+</body>
+</html>
