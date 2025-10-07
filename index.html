@@ -62,10 +62,18 @@
   </section>
 
 
+<!-- Chatbot Toggle Button -->
+<button id="chatbot-toggle"
+  class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 z-50">
+  💬
+</button>
 
-<!-- AI Chatbot Widget -->
-<div id="chatbot" class="fixed bottom-6 right-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg w-80 max-h-[80vh] flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700">
-  <div class="p-3 bg-gray-800 text-white text-sm font-semibold">Anup’s AI Chatbot 🤖</div>
+<!-- Chatbot Container (Hidden by Default) -->
+<div id="chatbot" class="hidden fixed bottom-20 right-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg w-80 max-h-[70vh] flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700 z-50">
+  <div class="p-3 bg-gray-800 text-white text-sm font-semibold flex justify-between items-center">
+    <span>Anup’s AI Chatbot 🤖</span>
+    <button id="chatbot-close" class="text-gray-300 hover:text-white">✖</button>
+  </div>
   <div id="chatbot-messages" class="flex-1 overflow-y-auto p-3 text-sm space-y-2"></div>
   <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
     <input id="chatbot-input" type="text" placeholder="Type a message..." class="flex-1 p-2 text-sm bg-transparent outline-none text-gray-800 dark:text-gray-100" />
@@ -75,9 +83,20 @@
 
 <script>
 const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
+const chatbot = document.getElementById("chatbot");
+const toggleBtn = document.getElementById("chatbot-toggle");
+const closeBtn = document.getElementById("chatbot-close");
 const form = document.getElementById("chatbot-form");
 const input = document.getElementById("chatbot-input");
 const messagesDiv = document.getElementById("chatbot-messages");
+
+toggleBtn.addEventListener("click", () => {
+  chatbot.classList.toggle("hidden");
+});
+
+closeBtn.addEventListener("click", () => {
+  chatbot.classList.add("hidden");
+});
 
 function addMessage(sender, text) {
   const msg = document.createElement("div");
@@ -111,6 +130,7 @@ form.addEventListener("submit", async (e) => {
   }
 });
 </script>
+
 
 
 </body>
