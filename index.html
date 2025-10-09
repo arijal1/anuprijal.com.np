@@ -92,15 +92,26 @@
       <li><i class="fas fa-paint-brush"></i> Modern Design & UX</li>
       <li><i class="fas fa-clock"></i> Reliable & On-Time Delivery</li>
     </ul>
-  </section>
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-<script type="module">
-	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
+
+
+	  <script lang="ts" setup>
+// App.vue
+import { onMounted } from 'vue';
+import '@n8n/chat/style.css';
+import { createChat } from '@n8n/chat';
+
+onMounted(() => {
 	createChat({
 		webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat'
 	});
+});
 </script>
+<template>
+	<div></div>
+</template>
+	  
+	
   
 </body>
 </html>
