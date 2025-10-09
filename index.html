@@ -272,21 +272,33 @@
   </footer>
 
   <!-- Chatbot -->
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-    const chat = createChat({
-      webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-      initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
-      theme: {
-        chatWindowBackground: "#1f2937",
-        userMessageBubbleColor: "#3b82f6",
-        botMessageBubbleColor: "#374151",
-        fontFamily: "Poppins, sans-serif",
-        borderRadius: "12px"
-      }
-    });
-    setTimeout(() => chat.open(), 2000);
-  </script>
+ <script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  const chat = createChat({
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+    initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
+    theme: {
+      chatWindowBackground: "#1f2937",
+      userMessageBubbleColor: "#3b82f6",
+      botMessageBubbleColor: "#374151",
+      fontFamily: "Poppins, sans-serif",
+      borderRadius: "12px"
+    }
+  });
+
+  // Auto open after short delay
+  setTimeout(() => chat.open(), 2000);
+
+  // Minimize chat if clicking outside
+  document.addEventListener('click', (event) => {
+    const chatContainer = document.querySelector('n8n-chat');
+    if (chatContainer && !chatContainer.contains(event.target)) {
+      chat.minimize();
+    }
+  });
+</script>
+
 
   <!-- Floating Particle Animation -->
   <script>
