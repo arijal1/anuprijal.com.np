@@ -3,53 +3,142 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Development Services</title>
-  <!-- Font Awesome for icons -->
+  <title>Anup Rijal | Web Development Services</title>
+
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
   <style>
-    body { margin:0; font-family: 'Poppins', sans-serif; background:#f5f5dc; }
-    nav { position:fixed; top:0; width:100%; background:rgba(255,255,255,0.9); backdrop-filter:blur(10px); z-index:1000; }
-    nav ul { list-style:none; display:flex; justify-content:center; padding:1rem; margin:0; gap:2rem; }
-    nav a { text-decoration:none; color:#333; font-weight:600; }
-    nav a:hover { color:#007bff; }
-    section { padding:100px 20px; text-align:center; position:relative; z-index:2; }
-    .fade-in { opacity:0; animation:fadeIn 1s forwards; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-    .glass-section { background:rgba(255,255,255,0.6); border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.1); margin:50px auto; max-width:900px; padding:40px 20px; }
-    .services-container { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:20px; }
-    .services-container div { background:rgba(255,255,255,0.8); border-radius:10px; padding:20px; width:250px; box-shadow:0 2px 10px rgba(0,0,0,0.1); transition:transform 0.3s; }
-    .services-container div:hover { transform:scale(1.05); }
-    .wave { display:block; width:100%; margin-top:-1px; }
-    .factors-list { list-style:none; padding:0; }
-    .factors-list li { margin:10px 0; font-size:1.1rem; }
-    /* Chatbot Styles */
-    #chatbot-toggle { position:fixed; bottom:20px; right:20px; background:#007bff; color:white; border:none; border-radius:50%; width:60px; height:60px; font-size:24px; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.2); z-index:9999; }
-    #chatbot-toggle:hover { background:#0056b3; }
-    #chatbot { position:fixed; bottom:100px; right:20px; background:#fff; border-radius:12px; box-shadow:0 4px 30px rgba(0,0,0,0.2); width:350px; max-height:70vh; display:flex; flex-direction:column; overflow:hidden; border:1px solid #ccc; z-index:9999; }
-    #chatbot.hidden { display:none; }
-    #chatbot .header { background:#333; color:#fff; padding:10px 15px; display:flex; justify-content:space-between; align-items:center; font-weight:bold; }
-    #chatbot-messages { flex:1; overflow-y:auto; padding:15px; font-size:0.9rem; }
-    #chatbot-messages div { margin-bottom:8px; line-height:1.4; }
-    #chatbot-form { display:flex; border-top:1px solid #eee; }
-    #chatbot-input { flex:1; border:none; padding:10px; font-size:0.9rem; outline:none; }
-    #chatbot-form button { border:none; background:#007bff; color:white; padding:10px 15px; cursor:pointer; font-weight:bold; transition:background 0.3s; }
-    #chatbot-form button:hover { background:#0056b3; }
+    /* General */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 0.8rem 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #f8fafc;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #3b82f6;
+    }
+
+    /* Sections */
+    section {
+      padding: 120px 20px 80px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.5s forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .glass-section {
+      background: rgba(255,255,255,0.08);
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      margin: 50px auto;
+      max-width: 900px;
+      padding: 40px 20px;
+    }
+
+    h1, h2 {
+      color: #facc15;
+    }
+
+    .services-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .services-container div {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+
+    .services-container div:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 20px #3b82f6;
+    }
+
+    .factors-list {
+      list-style: none;
+      padding: 0;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    /* Animated Floating Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.5), transparent);
+      animation: float 15s infinite ease-in-out alternate;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) translateX(0px); }
+      50% { transform: translateY(-50px) translateX(40px); }
+      100% { transform: translateY(0px) translateX(0px); }
+    }
+
+    .orb1 { width: 200px; height: 200px; top: 20%; left: 10%; animation-delay: 0s; }
+    .orb2 { width: 300px; height: 300px; bottom: 15%; right: 10%; animation-delay: 4s; }
+    .orb3 { width: 150px; height: 150px; top: 70%; left: 40%; animation-delay: 8s; }
   </style>
 </head>
 <body>
 
-  <!-- Particles Canvas -->
-  <canvas id="particles"></canvas>
-
-  <!-- Animated Blobs -->
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
+  <!-- Floating Orbs Animation -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
 
   <!-- Navigation -->
   <nav>
-    <ul id="nav-links">
+    <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#factors">Why Choose Me</a></li>
@@ -57,67 +146,66 @@
     </ul>
   </nav>
 
-  <!-- About Section -->
-  <section id="about" class="fade-in glass-section">
+  <!-- About -->
+  <section id="about" class="glass-section">
     <h1>Hi, I'm Anup 👋</h1>
-    <p>I create modern, responsive websites that help businesses grow online.</p>
+    <p>I create modern, responsive, and intelligent websites powered by automation and AI.</p>
   </section>
 
-  <!-- Dynamic SVG Wave -->
-  <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" id="wave1">
-    <path fill="#F5F5DC" d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"></path>
-  </svg>
-
-  <!-- Services Section -->
-  <section id="services" class="fade-in glass-section">
+  <!-- Services -->
+  <section id="services" class="glass-section">
     <h2>My Services</h2>
-    <div class="services-container" id="services-container">
-      <div><i class="fas fa-code"></i><h3>Website Development</h3><p>Building fast, responsive, and SEO-optimized sites.</p></div>
-      <div><i class="fas fa-paint-brush"></i><h3>UI/UX Design</h3><p>Designing intuitive and visually stunning interfaces.</p></div>
-      <div><i class="fas fa-server"></i><h3>Automation & AI</h3><p>Integrating workflows and intelligent chatbots.</p></div>
+    <div class="services-container">
+      <div><i class="fas fa-code fa-2x"></i><h3>Web Development</h3><p>Fast, responsive, and SEO-optimized websites built for performance.</p></div>
+      <div><i class="fas fa-brain fa-2x"></i><h3>AI Integration</h3><p>Seamless chatbot and automation workflows with n8n & OpenAI.</p></div>
+      <div><i class="fas fa-paint-brush fa-2x"></i><h3>UI/UX Design</h3><p>Modern and aesthetic interface design with smooth user experience.</p></div>
     </div>
   </section>
 
-  <!-- Dynamic SVG Wave -->
-  <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" id="wave2">
-    <path fill="#FFD700" d="M0,50 C360,-50 1080,150 1440,50 L1440,100 L0,100 Z"></path>
-  </svg>
-
-  <!-- Key Factors Section -->
-  <section id="factors" class="fade-in glass-section">
+  <!-- Why Choose Me -->
+  <section id="factors" class="glass-section">
     <h2>Why Choose Me</h2>
     <ul class="factors-list">
-      <li><i class="fas fa-bolt"></i> Fast & Responsive Websites</li>
-      <li><i class="fas fa-code"></i> Clean Code & SEO Optimized</li>
-      <li><i class="fas fa-paint-brush"></i> Modern Design & UX</li>
-      <li><i class="fas fa-clock"></i> Reliable & On-Time Delivery</li>
+      <li><i class="fas fa-bolt"></i> Lightning-Fast & Optimized Code</li>
+      <li><i class="fas fa-robot"></i> Smart AI & Automation Integration</li>
+      <li><i class="fas fa-paint-brush"></i> Visually Stunning Modern Design</li>
+      <li><i class="fas fa-clock"></i> Reliable, Transparent, & On-Time Delivery</li>
     </ul>
+  </section>
 
+  <!-- Contact -->
+  <section id="contact" class="glass-section">
+    <h2>Let's Connect</h2>
+    <p>Reach out for collaborations, projects, or questions — I’d love to hear from you!</p>
+  </section>
 
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <!-- n8n Chatbot -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-<script type="module">
-  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    const chat = createChat({
+      webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+      initialMessages: [
+        "👋 Hey there! I’m Anup’s AI assistant — ready to help you with anything about web, AI, or design!"
+      ],
+      theme: {
+        chatWindowBackground: "#1e293b",
+        userMessageBubbleColor: "#3b82f6",
+        botMessageBubbleColor: "#334155",
+        textColor: "#f8fafc",
+        fontFamily: "Poppins, sans-serif",
+        borderRadius: "16px"
+      }
+    });
 
-  createChat({
-    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+    // Auto-open chatbot 3s after page load
+    setTimeout(() => {
+      const chatButton = document.querySelector('n8n-chat-button');
+      if (chatButton) chatButton.click();
+    }, 3000);
+  </script>
 
-    // 👋 Intro message will show inside chat window
-    initialMessages: [
-      "👋 Hi! I'm your AI assistant — how can I help today?"
-    ],
-
-    // Theme customization
-    theme: {
-      chatWindowBackground: "#1f2937",
-      userMessageBubbleColor: "#3b82f6",
-      botMessageBubbleColor: "#374151",
-      fontFamily: "Poppins, sans-serif",
-      borderRadius: "12px"
-    }
-  });
-</script>
-
-  
 </body>
+  
 </html>
+
