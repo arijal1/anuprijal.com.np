@@ -272,7 +272,7 @@
   </footer>
 
   <!-- Chatbot -->
- <script type="module">
+<script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
   const chat = createChat({
@@ -290,10 +290,17 @@
   // Auto open after short delay
   setTimeout(() => chat.open(), 2000);
 
-  // Minimize chat if clicking outside
+  // Detect clicks outside the chatbot container
   document.addEventListener('click', (event) => {
-    const chatContainer = document.querySelector('n8n-chat');
-    if (chatContainer && !chatContainer.contains(event.target)) {
+    // n8n chat adds a shadow DOM wrapper called 'n8n-chat'
+    const chatWrapper = document.querySelector('n8n-chat');
+    if (!chatWrapper) return;
+
+    const isClickInside = chatWrapper.shadowRoot
+      ? chatWrapper.shadowRoot.contains(event.target)
+      : chatWrapper.contains(event.target);
+
+    if (!isClickInside) {
       chat.minimize();
     }
   });
