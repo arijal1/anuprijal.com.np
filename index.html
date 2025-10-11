@@ -271,35 +271,48 @@
   </footer>
 
   <!-- Chatbot -->
-<!-- n8n Chat Embed CSS -->
+  <!-- n8n Chat Embed CSS -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
 <!-- Custom Styles -->
 <style>
-  /* Hide default n8n button */
-  .n8n-chat-button {
-    display: none !important;
-  }
-
-  /* Custom floating chat button */
+  /* Floating bubble button */
   #custom-chat-btn {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
+    width: 60px;
+    height: 60px;
     background-color: #1e40af;
     color: white;
-    border-radius: 9999px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     z-index: 9999;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
   }
 
   #custom-chat-btn:hover {
     background-color: #2563eb;
-    transform: scale(1.05);
+    transform: scale(1.1);
+  }
+
+  /* Chat window slide-in animation */
+  .n8n-chat {
+    border-radius: 16px !important;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .n8n-chat.n8n-chat-hidden {
+    transform: translateY(100%) scale(0.95);
+    opacity: 0;
+    pointer-events: none;
   }
 
   /* Chat header */
@@ -307,6 +320,7 @@
     background-color: #1e40af !important;
     color: white !important;
     font-weight: 600;
+    font-family: 'Inter', sans-serif;
   }
 
   /* Chat message font */
@@ -315,36 +329,49 @@
   }
 </style>
 
-<!-- Custom Chat Button -->
-<div id="custom-chat-btn">Chat</div>
+<!-- Floating Bubble Button -->
+<div id="custom-chat-btn">💬</div>
 
 <!-- n8n Chat Script -->
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-  // Initialize chat (minimized)
+  // Initialize chat with default button disabled
   const chat = createChat({
     webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
     welcomeMessage: 'Hi! I am your AI assistant. How can I help you today?',
     placeholder: 'Type your message...',
-    minimized: true
+    minimized: true,
+    showDefaultButton: false // ✅ disables the default red button
   });
 
   const chatBtn = document.getElementById('custom-chat-btn');
 
-  // Toggle chat on button click
+  // Toggle chat on bubble click
   chatBtn.addEventListener('click', () => {
     chat.toggle();
+
+    const chatWindow = document.querySelector('.n8n-chat');
+    if (chatWindow.classList.contains('n8n-chat-hidden')) {
+      chatWindow.classList.remove('n8n-chat-hidden');
+    } else {
+      chatWindow.classList.add('n8n-chat-hidden');
+    }
   });
 
-  // Minimize chat when clicking outside
+  // Start hidden with slide animation
+  const chatWindow = document.querySelector('.n8n-chat');
+  chatWindow.classList.add('n8n-chat-hidden');
+
+  // Minimize when clicking outside
   document.addEventListener('click', (e) => {
-    const chatWindow = document.querySelector('.n8n-chat');
-    if (chatWindow && !chatWindow.contains(e.target) && e.target !== chatBtn) {
+    if (!chatWindow.contains(e.target) && e.target !== chatBtn) {
       chat.minimize();
+      chatWindow.classList.add('n8n-chat-hidden');
     }
   });
 </script>
+
 
 </body>
 </html>
