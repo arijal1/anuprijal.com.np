@@ -318,27 +318,45 @@
 <!---chatbot-->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
+<!-- Custom Chat Button -->
 <button id="chat-launcher" class="chat-launcher">💬 Chat with Anup</button>
 
 <style>
-.chat-launcher {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 999px;
-  background-color: #8b5cf6;
-  color: #fff;
-  font-family: Poppins, sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  z-index: 9999;
-  transition: all 0.3s ease;
-}
-.chat-launcher:hover { background-color: #7c3aed; transform: scale(1.05); }
-n8n-chat { position: fixed !important; bottom: 80px; right: 24px; z-index: 10000; }
+  .chat-launcher {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background-color: #8b5cf6;
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+    transition: all 0.3s ease;
+  }
+
+  .chat-launcher:hover {
+    background-color: #7c3aed;
+    transform: scale(1.05);
+  }
+
+  n8n-chat {
+    position: fixed !important;
+    bottom: 80px;
+    right: 24px;
+    z-index: 10000;
+  }
+
+  @media (max-width: 600px) {
+    .chat-launcher, n8n-chat {
+      bottom: 16px;
+      right: 16px;
+    }
+  }
 </style>
 
 <script type="module">
@@ -353,27 +371,50 @@ n8n-chat { position: fixed !important; bottom: 80px; right: 24px; z-index: 10000
       userMessageBubbleColor: "#8b5cf6",
       botMessageBubbleColor: "#374151",
       fontFamily: "Poppins, sans-serif",
-      borderRadius: "12px"
+      borderRadius: "12px",
+      headerBackgroundColor: "#111827",
+      headerTextColor: "#ffffff",
+      inputBackgroundColor: "#1f2937",
+      inputTextColor: "#ffffff",
+      sendButtonColor: "#8b5cf6"
     },
-    showLauncher: false // disables the default launcher
+    showLauncher: false // disable default n8n button
   });
 
-  const btn = document.getElementById("chat-launcher");
-  let isOpen = false;
+  // 🔥 Kill default n8n red button if it appears
+  const removeDefaultLauncher = () => {
+    document.querySelectorAll('button[class*="n8n-chat-launcher"]').forEach(el => el.remove());
+  };
+  // run immediately + check periodically for safety
+  removeDefaultLauncher();
+  setInterval(removeDefaultLauncher, 1000);
 
-  btn.addEventListener("click", (e) => {
+  const launcher = document.getElementById("chat-launcher");
+  let chatOpen = false;
+
+  launcher.addEventListener("click", (e) => {
     e.stopPropagation();
-    if (isOpen) {
+    if (chatOpen) {
       chat.minimize();
-      btn.textContent = "💬 Chat with Anup";
+      launcher.textContent = "💬 Chat with Anup";
     } else {
       chat.open();
-      btn.textContent = "— Close chat";
+      launcher.textContent = "— Close chat";
     }
-    isOpen = !isOpen;
+    chatOpen = !chatOpen;
+  });
+
+  // Minimize when clicking outside chat
+  document.addEventListener("click", (e) => {
+    const host = document.querySelector("n8n-chat");
+    if (!host || !chatOpen) return;
+    if (!host.contains(e.target) && !launcher.contains(e.target)) {
+      chat.minimize();
+      launcher.textContent = "💬 Chat with Anup";
+      chatOpen = false;
+    }
   });
 </script>
-
 
   
 </body>
