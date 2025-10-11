@@ -315,103 +315,59 @@
   }
 </style>
 
-<!---chatbot-->
+<!-- n8n Chat Embed CSS -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
-<!-- Custom Chat Button -->
-<button id="chat-launcher" class="chat-launcher">💬 Chat with Anup</button>
-
+<!-- Custom Styles -->
 <style>
-  .chat-launcher {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 999px;
-    background-color: #8b5cf6;
-    color: #fff;
-    font-family: Poppins, sans-serif;
+  /* Chat button */
+  .n8n-chat-button {
+    background-color: #1e40af !important; /* Your primary color */
+    color: white !important;
+    border-radius: 9999px !important; /* fully rounded */
+    padding: 0.75rem 1.5rem !important;
     font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     transition: all 0.3s ease;
+    bottom: 2rem !important;
+    right: 2rem !important;
   }
 
-  .chat-launcher:hover {
-    background-color: #7c3aed;
+  .n8n-chat-button:hover {
+    background-color: #2563eb !important;
     transform: scale(1.05);
   }
 
-  n8n-chat {
-    position: fixed !important;
-    bottom: 80px;
-    right: 24px;
-    z-index: 10000;
+  /* Chat header */
+  .n8n-chat-header {
+    background-color: #1e40af !important;
+    color: white !important;
+    font-weight: 600;
   }
 
-  @media (max-width: 600px) {
-    .chat-launcher, n8n-chat {
-      bottom: 16px;
-      right: 16px;
-    }
+  /* Chat bubble text */
+  .n8n-chat-message {
+    font-family: 'Inter', sans-serif;
   }
 </style>
 
+<!-- n8n Chat Script -->
 <script type="module">
-  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
   const chat = createChat({
-    webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
-    initialMessages: ["👋 Hi there! I'm Anup’s assistant. How can I help you today?"],
-    theme: {
-      position: "bottom-right",
-      chatWindowBackground: "#1f2937",
-      userMessageBubbleColor: "#8b5cf6",
-      botMessageBubbleColor: "#374151",
-      fontFamily: "Poppins, sans-serif",
-      borderRadius: "12px",
-      headerBackgroundColor: "#111827",
-      headerTextColor: "#ffffff",
-      inputBackgroundColor: "#1f2937",
-      inputTextColor: "#ffffff",
-      sendButtonColor: "#8b5cf6"
-    },
-    showLauncher: false // disable default n8n button
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+    welcomeMessage: 'Hi! I am your AI assistant. How can I help you today?',
+    placeholder: 'Type your message...',
+    minimized: true
   });
 
-  // 🔥 Kill default n8n red button if it appears
-  const removeDefaultLauncher = () => {
-    document.querySelectorAll('button[class*="n8n-chat-launcher"]').forEach(el => el.remove());
-  };
-  // run immediately + check periodically for safety
-  removeDefaultLauncher();
-  setInterval(removeDefaultLauncher, 1000);
-
-  const launcher = document.getElementById("chat-launcher");
-  let chatOpen = false;
-
-  launcher.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (chatOpen) {
+  // Minimize chat when clicking outside
+  document.addEventListener('click', (e) => {
+    const chatWindow = document.querySelector('.n8n-chat');
+    const chatButton = document.querySelector('.n8n-chat-button');
+    if (chatWindow && !chatWindow.contains(e.target) && !chatButton.contains(e.target)) {
       chat.minimize();
-      launcher.textContent = "💬 Chat with Anup";
-    } else {
-      chat.open();
-      launcher.textContent = "— Close chat";
-    }
-    chatOpen = !chatOpen;
-  });
-
-  // Minimize when clicking outside chat
-  document.addEventListener("click", (e) => {
-    const host = document.querySelector("n8n-chat");
-    if (!host || !chatOpen) return;
-    if (!host.contains(e.target) && !launcher.contains(e.target)) {
-      chat.minimize();
-      launcher.textContent = "💬 Chat with Anup";
-      chatOpen = false;
     }
   });
 </script>
