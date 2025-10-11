@@ -270,15 +270,46 @@
     </div>
   </footer>
 
-  <!-- Chatbot -->
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  
+<!--chatbot-->
  <script type="module">
- import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
- 
- createChat({
- webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat'
- });
- </script>
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  const chat = createChat({
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+    initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
+    theme: {
+      position: "bottom-right", // Chat tab on bottom-right
+      chatWindowBackground: "#1f2937", // Dark background
+      userMessageBubbleColor: "#8b5cf6", // Purple accent
+      botMessageBubbleColor: "#374151", // Dark gray for bot
+      fontFamily: "Poppins, sans-serif",
+      borderRadius: "12px",
+      headerBackgroundColor: "#111827", // Dark header
+      headerTextColor: "#ffffff",
+      inputBackgroundColor: "#1f2937",
+      inputTextColor: "#ffffff",
+      sendButtonColor: "#8b5cf6"
+    }
+  });
+
+  // Auto open after short delay
+  setTimeout(() => chat.open(), 2000);
+
+  // Minimize on outside click
+  document.addEventListener('click', (event) => {
+    const chatWrapper = document.querySelector('n8n-chat');
+    if (!chatWrapper) return;
+
+    const isClickInside = chatWrapper.shadowRoot
+      ? chatWrapper.shadowRoot.contains(event.target)
+      : chatWrapper.contains(event.target);
+
+    if (!isClickInside) {
+      chat.minimize();
+    }
+  });
+</script>
 
 </body>
 </html>
