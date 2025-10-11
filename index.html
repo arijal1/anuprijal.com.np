@@ -271,70 +271,34 @@
   </footer>
 
   <!-- Chatbot -->
-<!-- n8n Chatbot -->
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-
-<!-- Single Chat Launcher -->
-<button id="chat-launcher" class="chat-launcher">💬 Chat with Anup</button>
-
-<style>
-  .chat-launcher {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 999px;
-    background-color: #8b5cf6;
-    color: #fff;
-    font-family: Poppins, sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    z-index: 9999;
-    transition: all 0.3s ease;
-  }
-
-  .chat-launcher:hover {
-    background-color: #7c3aed;
-    transform: scale(1.05);
-  }
-
-  n8n-chat {
-    position: fixed !important;
-    bottom: 80px;
-    right: 24px;
-    z-index: 10000;
-  }
-
-  @media (max-width: 600px) {
-    .chat-launcher, n8n-chat {
-      bottom: 16px;
-      right: 16px;
-    }
-  }
-</style>
-
 <!-- n8n Chat Embed CSS -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
 <!-- Custom Styles -->
 <style>
-  /* Chat button */
+  /* Hide default n8n button */
   .n8n-chat-button {
-    background-color: #1e40af !important; /* Your primary color */
-    color: white !important;
-    border-radius: 9999px !important; /* fully rounded */
-    padding: 0.75rem 1.5rem !important;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    bottom: 2rem !important;
-    right: 2rem !important;
+    display: none !important;
   }
 
-  .n8n-chat-button:hover {
-    background-color: #2563eb !important;
+  /* Custom floating chat button */
+  #custom-chat-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #1e40af;
+    color: white;
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+    transition: all 0.3s ease;
+  }
+
+  #custom-chat-btn:hover {
+    background-color: #2563eb;
     transform: scale(1.05);
   }
 
@@ -345,16 +309,20 @@
     font-weight: 600;
   }
 
-  /* Chat bubble text */
+  /* Chat message font */
   .n8n-chat-message {
     font-family: 'Inter', sans-serif;
   }
 </style>
 
+<!-- Custom Chat Button -->
+<div id="custom-chat-btn">Chat</div>
+
 <!-- n8n Chat Script -->
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
+  // Initialize chat (minimized)
   const chat = createChat({
     webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
     welcomeMessage: 'Hi! I am your AI assistant. How can I help you today?',
@@ -362,16 +330,21 @@
     minimized: true
   });
 
+  const chatBtn = document.getElementById('custom-chat-btn');
+
+  // Toggle chat on button click
+  chatBtn.addEventListener('click', () => {
+    chat.toggle();
+  });
+
   // Minimize chat when clicking outside
   document.addEventListener('click', (e) => {
     const chatWindow = document.querySelector('.n8n-chat');
-    const chatButton = document.querySelector('.n8n-chat-button');
-    if (chatWindow && !chatWindow.contains(e.target) && !chatButton.contains(e.target)) {
+    if (chatWindow && !chatWindow.contains(e.target) && e.target !== chatBtn) {
       chat.minimize();
     }
   });
 </script>
 
-  
 </body>
 </html>
