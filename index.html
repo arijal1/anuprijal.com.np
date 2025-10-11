@@ -316,56 +316,34 @@
   }
 </style>
 
+
 <script type="module">
   import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-  // Create chat widget (no default launcher)
-  const chat = createChat({
-    webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
-    initialMessages: ["👋 Hi there! I'm Anup’s assistant. How can I help you today?"],
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  createChat({
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+
+    // 👋 Intro message will show inside chat window
+    initialMessages: [
+      "👋 Hi! I'm your AI assistant — how can I help today?"
+    ],
+
+    // Theme customization
     theme: {
-      position: "bottom-right",
       chatWindowBackground: "#1f2937",
-      userMessageBubbleColor: "#8b5cf6",
+      userMessageBubbleColor: "#3b82f6",
       botMessageBubbleColor: "#374151",
       fontFamily: "Poppins, sans-serif",
-      borderRadius: "12px",
-      headerBackgroundColor: "#111827",
-      headerTextColor: "#ffffff",
-      inputBackgroundColor: "#1f2937",
-      inputTextColor: "#ffffff",
-      sendButtonColor: "#8b5cf6"
-    },
-    showLauncher: false // 👈 hides n8n’s default button
-  });
-
-  const launcher = document.getElementById("chat-launcher");
-  let chatOpen = false;
-
-  // Toggle open/close
-  launcher.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (chatOpen) {
-      chat.minimize();
-      launcher.textContent = "💬 Chat with Anup";
-    } else {
-      chat.open();
-      launcher.textContent = "— Close chat";
-    }
-    chatOpen = !chatOpen;
-  });
-
-  // Minimize when clicking outside
-  document.addEventListener("click", (e) => {
-    const host = document.querySelector("n8n-chat");
-    if (!host || !chatOpen) return;
-    if (!host.contains(e.target) && !launcher.contains(e.target)) {
-      chat.minimize();
-      launcher.textContent = "💬 Chat with Anup";
-      chatOpen = false;
+      borderRadius: "12px"
     }
   });
 </script>
+
 
   
 </body>
