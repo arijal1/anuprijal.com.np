@@ -9,8 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- n8n Chat CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
 
   <style>
     /* ========== Base ========== */
@@ -316,31 +315,62 @@
   }
 </style>
 
+<!---chatbot-->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+<button id="chat-launcher" class="chat-launcher">💬 Chat with Anup</button>
+
+<style>
+.chat-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  background-color: #8b5cf6;
+  color: #fff;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+.chat-launcher:hover { background-color: #7c3aed; transform: scale(1.05); }
+n8n-chat { position: fixed !important; bottom: 80px; right: 24px; z-index: 10000; }
+</style>
 
 <script type="module">
   import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-
-<script type="module">
-  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-  createChat({
-    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-
-    // 👋 Intro message will show inside chat window
-    initialMessages: [
-      "👋 Hi! I'm your AI assistant — how can I help today?"
-    ],
-
-    // Theme customization
+  const chat = createChat({
+    webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
+    initialMessages: ["👋 Hi there! I'm Anup’s assistant. How can I help you today?"],
     theme: {
+      position: "bottom-right",
       chatWindowBackground: "#1f2937",
-      userMessageBubbleColor: "#3b82f6",
+      userMessageBubbleColor: "#8b5cf6",
       botMessageBubbleColor: "#374151",
       fontFamily: "Poppins, sans-serif",
       borderRadius: "12px"
+    },
+    showLauncher: false // disables the default launcher
+  });
+
+  const btn = document.getElementById("chat-launcher");
+  let isOpen = false;
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (isOpen) {
+      chat.minimize();
+      btn.textContent = "💬 Chat with Anup";
+    } else {
+      chat.open();
+      btn.textContent = "— Close chat";
     }
+    isOpen = !isOpen;
   });
 </script>
 
