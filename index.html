@@ -271,103 +271,14 @@
   </footer>
 
   <!-- Chatbot -->
-  <!-- n8n Chat Embed CSS -->
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-
-<style>
-  /* Floating bubble button */
-  #custom-chat-btn {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 60px;
-    height: 60px;
-    background-color: #1e40af;
-    color: white;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-    z-index: 9999;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-
-  #custom-chat-btn:hover {
-    background-color: #2563eb;
-    transform: scale(1.1);
-  }
-
-  /* Chat window slide-in animation */
-  .n8n-chat {
-    border-radius: 16px !important;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    transition: transform 0.4s ease, opacity 0.4s ease;
-  }
-
-  .n8n-chat.n8n-chat-hidden {
-    transform: translateY(100%) scale(0.95);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .n8n-chat-header {
-    background-color: #1e40af !important;
-    color: white !important;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .n8n-chat-message {
-    font-family: 'Inter', sans-serif;
-  }
-</style>
-
-<div id="custom-chat-btn">💬</div>
-
-<script type="module">
-  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-  // Initialize chat with default button disabled
-  const chat = createChat({
-    webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-    welcomeMessage: 'Hi! I am your AI assistant. How can I help you today?',
-    placeholder: 'Type your message...',
-    minimized: true,
-    showDefaultButton: false
-  });
-
-  const chatBtn = document.getElementById('custom-chat-btn');
-
-  // Wait until the chat element exists
-  const waitForChat = setInterval(() => {
-    const chatWindow = document.querySelector('.n8n-chat');
-    if (chatWindow) {
-      clearInterval(waitForChat);
-
-      // Start hidden with animation
-      chatWindow.classList.add('n8n-chat-hidden');
-
-      // Toggle chat on bubble click
-      chatBtn.addEventListener('click', () => {
-        chat.toggle();
-        chatWindow.classList.toggle('n8n-chat-hidden');
-      });
-
-      // Minimize when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!chatWindow.contains(e.target) && e.target !== chatBtn) {
-          chat.minimize();
-          chatWindow.classList.add('n8n-chat-hidden');
-        }
-      });
-    }
-  }, 100); // check every 100ms
-</script>
-
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+ <script type="module">
+ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+ 
+ createChat({
+ webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat'
+ });
+ </script>
 
 </body>
 </html>
