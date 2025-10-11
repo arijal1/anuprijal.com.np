@@ -274,7 +274,6 @@
   <!-- n8n Chat Embed CSS -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
-<!-- Custom Styles -->
 <style>
   /* Floating bubble button */
   #custom-chat-btn {
@@ -315,7 +314,6 @@
     pointer-events: none;
   }
 
-  /* Chat header */
   .n8n-chat-header {
     background-color: #1e40af !important;
     color: white !important;
@@ -323,16 +321,13 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* Chat message font */
   .n8n-chat-message {
     font-family: 'Inter', sans-serif;
   }
 </style>
 
-<!-- Floating Bubble Button -->
 <div id="custom-chat-btn">💬</div>
 
-<!-- n8n Chat Script -->
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
@@ -342,34 +337,35 @@
     welcomeMessage: 'Hi! I am your AI assistant. How can I help you today?',
     placeholder: 'Type your message...',
     minimized: true,
-    showDefaultButton: false // ✅ disables the default red button
+    showDefaultButton: false
   });
 
   const chatBtn = document.getElementById('custom-chat-btn');
 
-  // Toggle chat on bubble click
-  chatBtn.addEventListener('click', () => {
-    chat.toggle();
-
+  // Wait until the chat element exists
+  const waitForChat = setInterval(() => {
     const chatWindow = document.querySelector('.n8n-chat');
-    if (chatWindow.classList.contains('n8n-chat-hidden')) {
-      chatWindow.classList.remove('n8n-chat-hidden');
-    } else {
-      chatWindow.classList.add('n8n-chat-hidden');
-    }
-  });
+    if (chatWindow) {
+      clearInterval(waitForChat);
 
-  // Start hidden with slide animation
-  const chatWindow = document.querySelector('.n8n-chat');
-  chatWindow.classList.add('n8n-chat-hidden');
-
-  // Minimize when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!chatWindow.contains(e.target) && e.target !== chatBtn) {
-      chat.minimize();
+      // Start hidden with animation
       chatWindow.classList.add('n8n-chat-hidden');
+
+      // Toggle chat on bubble click
+      chatBtn.addEventListener('click', () => {
+        chat.toggle();
+        chatWindow.classList.toggle('n8n-chat-hidden');
+      });
+
+      // Minimize when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!chatWindow.contains(e.target) && e.target !== chatBtn) {
+          chat.minimize();
+          chatWindow.classList.add('n8n-chat-hidden');
+        }
+      });
     }
-  });
+  }, 100); // check every 100ms
 </script>
 
 
