@@ -271,103 +271,76 @@
   </footer>
 
   
-<!-- Chatbot Widget -->
-<!-- Chatbot Widget -->
+<!-- ===== AnupRijal.com.np Custom Chatbot ===== -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
 <style>
-  /* ===== Custom Theme Styling ===== */
-  .chat-toggle {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: linear-gradient(135deg, #2563eb, #1e3a8a);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    z-index: 9999;
+  /* --- Customize the Chat Widget --- */
+  .n8n-chat {
+    --chat-background-color: #0f172a; /* dark background */
+    --chat-text-color: #e2e8f0; /* light text */
+    --chat-primary-color: #2563eb; /* your website’s blue */
+    --chat-secondary-color: #1e3a8a;
+    --chat-border-radius: 14px;
+    --chat-bubble-color: #1e40af;
+    --chat-bubble-text-color: #ffffff;
+    --chat-user-bubble-color: #2563eb;
+    --chat-user-text-color: #ffffff;
+    --chat-font-family: 'Inter', sans-serif;
+    --chat-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   }
-  .chat-toggle:hover {
+
+  /* Floating button customisation */
+  .n8n-chat-toggle-button {
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+    border-radius: 50%;
+    width: 62px;
+    height: 62px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+  }
+
+  .n8n-chat-toggle-button:hover {
     transform: scale(1.1);
     background: linear-gradient(135deg, #1d4ed8, #172554);
   }
 
-  .chatbot-frame {
-    position: fixed;
-    bottom: 100px;
+  /* Adjust position */
+  .n8n-chat-widget {
+    bottom: 90px;
     right: 24px;
-    width: 400px;
-    height: 550px;
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-    display: none;
-    z-index: 9998;
-  }
-
-  @media (max-width: 640px) {
-    .chatbot-frame {
-      width: 90%;
-      height: 70%;
-      right: 5%;
-    }
   }
 </style>
 
-<!-- Chatbot Script -->
 <script type="module">
-  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-  // Create hidden chatbot container
-  const chatbotFrame = document.createElement('div');
-  chatbotFrame.classList.add('chatbot-frame');
-  document.body.appendChild(chatbotFrame);
-
-  // Create chatbot toggle button
-  const chatButton = document.createElement('button');
-  chatButton.classList.add('chat-toggle');
-  chatButton.innerHTML = '💬';
-  document.body.appendChild(chatButton);
-
-  // Chatbot visibility toggle
-  chatButton.addEventListener('click', () => {
-    const isVisible = chatbotFrame.style.display === 'block';
-    chatbotFrame.style.display = isVisible ? 'none' : 'block';
-  });
-
-  // Create n8n chat inside iframe-like div
   createChat({
-    webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-    target: chatbotFrame,
+    webhookUrl: "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
     chatTitle: "Anup's AI Assistant 🤖",
-    subtitle: "Ask me anything!",
+    subtitle: "Ask me anything about Anup or his work!",
+    initialMessage: "Hi there! 👋 I'm your AI assistant — how can I help today?",
     theme: {
-      primaryColor: '#2563eb',
-      secondaryColor: '#1e3a8a',
-      backgroundColor: '#0f172a',
-      textColor: '#e2e8f0',
-      bubbleColor: '#1e40af',
-      bubbleTextColor: '#ffffff',
-      userBubbleColor: '#2563eb',
-      userTextColor: '#ffffff'
-    }
-  });
-
-  // Hide chatbot when clicking outside it
-  document.addEventListener('click', (e) => {
-    if (!chatbotFrame.contains(e.target) && !chatButton.contains(e.target)) {
-      chatbotFrame.style.display = 'none';
+      button: {
+        backgroundColor: "#2563eb",
+        iconColor: "#ffffff",
+        size: "large",
+        bottom: "24px",
+        right: "24px"
+      },
+      chatWindow: {
+        backgroundColor: "#0f172a",
+        textColor: "#e2e8f0",
+        bubbleColor: "#1e40af",
+        bubbleTextColor: "#ffffff",
+        userBubbleColor: "#2563eb",
+        userTextColor: "#ffffff",
+        borderRadius: "14px"
+      }
     }
   });
 </script>
+
 
 
 </body>
