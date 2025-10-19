@@ -271,14 +271,16 @@
   </footer>
 
   
-<!-- ===== AnupRijal.com.np Custom Chatbot ===== -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
 <script type="module">
   import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-  const chat = createChat({
+  createChat({
     webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
     chatTitle: "Anup's AI Assistant 🤖",
     subtitle: "Ask me anything about Anup or his work!",
+    initialMessage: "Hi there! 👋 I'm your AI assistant — how can I help today?",
     theme: {
       button: {
         backgroundColor: "#2563eb",
@@ -298,29 +300,7 @@
       }
     }
   });
-
-  // 👇 Wait a moment, then inject your own greeting
-  setTimeout(() => {
-    const chatWindow = document.querySelector(".n8n-chat-window");
-    if (chatWindow) {
-      const customGreeting = document.createElement("div");
-      customGreeting.className = "n8n-chat-message bot";
-      customGreeting.style.margin = "10px 20px";
-      customGreeting.innerHTML = `<div style="
-        background:#1e40af;
-        color:#fff;
-        padding:12px 16px;
-        border-radius:14px;
-        display:inline-block;
-        max-width:80%;
-        font-size:15px;">
-        👋 Hi there! I’m <b>Anup’s AI Assistant</b>. How can I help you today?
-      </div>`;
-      chatWindow.appendChild(customGreeting);
-    }
-  }, 1500);
 </script>
-
 
 
 
