@@ -82,23 +82,7 @@
 </head>
 <body>
 
-     <a href="/journal.html" style="
-  display: inline-block;
-  padding: 10px 24px;
-  background: #0F2044;
-  color: #E8A020;
-  font-family: Georgia, serif;
-  font-size: 0.95rem;
-  font-weight: bold;
-  letter-spacing: 0.05em;
-  text-decoration: none;
-  border-radius: 6px;
-  border: 2px solid #E8A020;
-  transition: background 0.2s;
-" onmouseover="this.style.background='#E8A020';this.style.color='#0F2044'"
-   onmouseout="this.style.background='#0F2044';this.style.color='#E8A020'">
-  Journal ✦
-</a>
+     
   <div class="noise"></div>
   <div id="prog"></div>
   <div id="root"></div>
@@ -339,6 +323,23 @@
       return(<div ref={ref} onMouseMove={mv} onMouseLeave={lv} style={{transition:"transform .18s ease,box-shadow .18s ease",...style}}>{children}</div>);
     }
 
+     <a href="/journal.html" style="
+  display: inline-block;
+  padding: 10px 24px;
+  background: #0F2044;
+  color: #E8A020;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-radius: 6px;
+  border: 2px solid #E8A020;
+  transition: background 0.2s;
+" onmouseover="this.style.background='#E8A020';this.style.color='#0F2044'"
+   onmouseout="this.style.background='#0F2044';this.style.color='#E8A020'">
+  Journal ✦
+</a>
     /* ── TESTIMONIAL SLIDER (improved) ── */
     function TestimonialSlider(){
       const[active,setActive]=useState(0);const tot=TESTIMONIALS.length;
