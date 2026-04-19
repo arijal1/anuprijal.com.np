@@ -5,22 +5,347 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-adsense-account" content="ca-pub-1123519517370708">
   <title>Journal — Anup Rijal</title>
+  <meta name="description" content="Thoughts on web development, automation, and building things for the web — by Anup Rijal, Sydney.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
   <style>
-    body { font-family: Georgia, serif; max-width: 700px; margin: 60px auto; padding: 0 20px; color: #222; line-height: 1.8; }
-    h1 { font-size: 2rem; margin-bottom: 5px; }
-    .date { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
-    p { margin-bottom: 1.2em; }
-    a { color: #0D7377; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+      --cream: #FAF8F3;
+      --warm-white: #FFFEF9;
+      --ink: #1A1714;
+      --ink-60: rgba(26,23,20,.6);
+      --ink-30: rgba(26,23,20,.3);
+      --ink-10: rgba(26,23,20,.08);
+      --accent: #D4511A;
+      --accent-light: #FFF0E8;
+      --accent-dark: #A83B10;
+      --teal: #0A6E5C;
+      --teal-light: #E3F5F1;
+      --border: rgba(26,23,20,.1);
+      --border-strong: rgba(26,23,20,.2);
+      --radius: 4px;
+      --radius-lg: 10px;
+    }
+
+    body {
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--ink-30); border-radius: 2px; }
+
+    /* ── PROGRESS ── */
+    #progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 999; transition: width .1s; pointer-events: none; width: 0; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; height: 64px;
+      background: rgba(255,254,249,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: -.3px; }
+    .nav-back { display: inline-flex; align-items: center; gap: 6px; font-size: .875rem; font-weight: 500; color: var(--ink-60); text-decoration: none; transition: color .2s; }
+    .nav-back:hover { color: var(--accent); }
+    .nav-cta { background: var(--ink); color: #fff; border: none; border-radius: var(--radius); padding: 9px 20px; font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 500; cursor: pointer; transition: background .2s; text-decoration: none; display: inline-block; }
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ── JOURNAL HEADER ── */
+    .journal-header {
+      background: var(--cream);
+      padding: 120px 60px 72px;
+      border-bottom: 1px solid var(--border);
+    }
+    .journal-header-inner { max-width: 760px; margin: 0 auto; }
+
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+    .eyebrow::before { content: ''; display: block; width: 16px; height: 1px; background: var(--accent); }
+
+    .journal-title { font-family: 'Fraunces', serif; font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 700; line-height: 1.12; letter-spacing: -.04em; color: var(--ink); margin-bottom: 20px; }
+    .journal-title em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+    .journal-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .meta-item { display: flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--ink-60); font-weight: 500; }
+    .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-30); }
+    .meta-tag { font-size: .72rem; font-weight: 600; padding: 3px 9px; border-radius: 100px; background: var(--accent-light); color: var(--accent-dark); }
+
+    /* ── ARTICLE ── */
+    .article-wrap { max-width: 760px; margin: 0 auto; padding: 72px 60px 100px; }
+
+    .article-intro {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink);
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-body p {
+      font-size: 1.025rem;
+      line-height: 1.82;
+      color: var(--ink-60);
+      margin-bottom: 1.6em;
+    }
+
+    .article-body p:last-child { margin-bottom: 0; }
+
+    .article-body strong { color: var(--ink); font-weight: 600; }
+
+    .article-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: color .2s; }
+    .article-body a:hover { color: var(--accent-dark); }
+
+    .article-body h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin: 2.4em 0 .8em;
+    }
+
+    /* ── PULLQUOTE ── */
+    .pullquote {
+      border-left: 3px solid var(--accent);
+      padding: 4px 0 4px 28px;
+      margin: 2.4em 0;
+    }
+    .pullquote p {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink) !important;
+      line-height: 1.7;
+      margin: 0 !important;
+    }
+
+    /* ── TECH CARD ── */
+    .tech-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin: 2.4em 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .tech-item { display: flex; align-items: center; gap: 10px; font-size: .875rem; font-weight: 500; color: var(--ink); }
+    .tech-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .tech-label { color: var(--ink-60); font-weight: 400; font-size: .8rem; }
+
+    /* ── ARTICLE FOOTER ── */
+    .article-footer {
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .author-block { display: flex; align-items: center; gap: 14px; }
+    .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Fraunces', serif; font-weight: 600; font-size: 1rem; flex-shrink: 0; }
+    .author-name { font-weight: 600; font-size: .9rem; }
+    .author-role { font-size: .8rem; color: var(--ink-60); }
+    .hire-btn { background: var(--ink); color: #fff; border: none; border-radius: var(--radius); padding: 11px 22px; font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s; }
+    .hire-btn:hover { background: var(--accent); }
+
+    /* ── MORE POSTS (placeholder) ── */
+    .more-posts { background: var(--cream); border-top: 1px solid var(--border); padding: 72px 60px; }
+    .more-inner { max-width: 760px; margin: 0 auto; }
+    .more-label { font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 24px; }
+    .post-stub { padding: 24px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .post-stub:last-child { border-bottom: none; }
+    .post-stub-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.05rem; letter-spacing: -.02em; color: var(--ink); }
+    .post-stub-date { font-size: .78rem; color: var(--ink-60); white-space: nowrap; }
+    .post-stub-arrow { color: var(--ink-30); font-size: .9rem; }
+
+    /* ── FOOTER ── */
+    footer { padding: 28px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--border); }
+    .footer-brand { font-family: 'Fraunces', serif; font-weight: 600; font-size: .9rem; }
+    footer p { font-size: .78rem; color: var(--ink-60); }
+
+    .status-dot { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--teal); font-weight: 500; }
+    .status-dot::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .journal-header { padding: 100px 24px 56px; }
+      .article-wrap { padding: 56px 24px 80px; }
+      .tech-card { grid-template-columns: 1fr; }
+      .article-footer { flex-direction: column; align-items: flex-start; }
+      .more-posts { padding: 56px 24px; }
+      footer { padding: 24px; flex-direction: column; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
-  <p><a href="/">← Home</a></p>
-  <h1>Building NepaliWave: Nepal's First AI-Powered News Portal</h1>
-  <p class="date">April 2026</p>
-  <p>Over the past few months I've been building NepaliWave — an automated news portal covering Nepal's top stories across politics, business, sports, and technology. The idea started simply: Nepal has great journalism, but it's fragmented across dozens of outlets and often hard to follow.</p>
-  <p>NepaliWave solves this by aggregating topics from Nepali RSS feeds and using AI to write original, independently-voiced articles. No copy-paste — every article is written fresh with a NepaliWave editorial angle, cutting through the noise to explain what the news actually means for Nepal and Nepalis.</p>
-  <p>The stack is Next.js 16 with TypeScript, deployed on a Raspberry Pi at home via Cloudflare Tunnel. A Python automation pipeline runs every two hours, pulling the latest headlines and generating new articles automatically. The whole system costs almost nothing to run.</p>
-  <p>The site is live at <a href="https://nepaliwave.anuprijal.com.np">nepaliwave.anuprijal.com.np</a>. It's early days but the foundation is solid. Next steps are integrating social media auto-posting to Facebook and X, and eventually moving to the dedicated domain nepaliwave.com.np once it's acquired.</p>
-  <p>It's been a fun project — part journalism, part infrastructure, part AI. More updates to come.</p>
+
+  <div id="progress"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-brand">Anup Rijal</a>
+    <a href="/" class="nav-back">← Back to site</a>
+    <a href="/#contact" class="nav-cta">Hire Me →</a>
+  </nav>
+
+  <!-- JOURNAL HEADER -->
+  <div class="journal-header">
+    <div class="journal-header-inner">
+      <div class="eyebrow">Journal · April 2026</div>
+      <h1 class="journal-title">Building NepaliWave:<br>Nepal's First <em>AI-Powered</em><br>News Portal</h1>
+      <div class="journal-meta">
+        <span class="meta-item">Anup Rijal</span>
+        <span class="meta-dot"></span>
+        <span class="meta-item">April 2026</span>
+        <span class="meta-dot"></span>
+        <span class="meta-item">5 min read</span>
+        <span class="meta-dot"></span>
+        <span class="meta-tag">Automation</span>
+        <span class="meta-tag">AI</span>
+        <span class="meta-tag">Nepal</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE -->
+  <div class="article-wrap">
+
+    <p class="article-intro">
+      Over the past few months I've been building NepaliWave — an automated news portal covering Nepal's top stories across politics, business, sports, and technology. The idea started simply: Nepal has great journalism, but it's fragmented across dozens of outlets and hard to follow from abroad.
+    </p>
+
+    <div class="article-body">
+
+      <p>
+        NepaliWave solves this by aggregating topics from Nepali RSS feeds and using AI to write original, independently-voiced articles. No copy-paste — every article is written fresh with a NepaliWave editorial angle, cutting through the noise to explain what the news actually means for Nepal and Nepalis.
+      </p>
+
+      <div class="pullquote">
+        <p>No copy-paste — every article is written fresh, with a NepaliWave editorial angle that explains what the news actually means.</p>
+      </div>
+
+      <h2>The stack</h2>
+
+      <p>
+        I built NepaliWave on Next.js 16 with TypeScript, deployed on a Raspberry Pi at home via Cloudflare Tunnel. A Python automation pipeline runs every two hours, pulling the latest headlines and generating new articles automatically.
+      </p>
+
+      <div class="tech-card">
+        <div class="tech-item"><span class="tech-dot"></span><span>Next.js 16 <span class="tech-label">— frontend</span></span></div>
+        <div class="tech-item"><span class="tech-dot"></span><span>TypeScript <span class="tech-label">— type safety</span></span></div>
+        <div class="tech-item"><span class="tech-dot"></span><span>Python <span class="tech-label">— automation pipeline</span></span></div>
+        <div class="tech-item"><span class="tech-dot"></span><span>Raspberry Pi <span class="tech-label">— self-hosted server</span></span></div>
+        <div class="tech-item"><span class="tech-dot"></span><span>Cloudflare Tunnel <span class="tech-label">— deployment</span></span></div>
+        <div class="tech-item"><span class="tech-dot"></span><span>RSS feeds <span class="tech-label">— content source</span></span></div>
+      </div>
+
+      <p>
+        The whole system costs almost nothing to run — the Raspberry Pi sips less than 5W idle and Cloudflare Tunnel is free. It's a good reminder that infrastructure doesn't have to be expensive to be reliable.
+      </p>
+
+      <h2>Where it's at now</h2>
+
+      <p>
+        The site is live at <a href="https://nepaliwave.anuprijal.com.np" target="_blank" rel="noopener noreferrer">nepaliwave.anuprijal.com.np</a>. It's early days but the foundation is solid — articles publish automatically every couple of hours with no manual intervention.
+      </p>
+
+      <p>
+        Next steps are integrating social media auto-posting to Facebook and X, and eventually moving to the dedicated domain <strong>nepaliwave.com.np</strong> once it's acquired. The goal is to be the most convenient, readable daily digest for Nepalis worldwide.
+      </p>
+
+      <p>
+        It's been a fun project — part journalism, part infrastructure, part AI. More updates to come as the product matures.
+      </p>
+
+    </div>
+
+    <!-- Article footer -->
+    <div class="article-footer">
+      <div class="author-block">
+        <div class="author-avatar">AR</div>
+        <div>
+          <div class="author-name">Anup Rijal</div>
+          <div class="author-role">Web Developer & Automation Expert · Sydney</div>
+        </div>
+      </div>
+      <a href="/#contact" class="hire-btn">Work with me →</a>
+    </div>
+
+  </div>
+
+  <!-- MORE POSTS -->
+  <div class="more-posts">
+    <div class="more-inner">
+      <div class="more-label">More from the journal</div>
+      <div class="post-stub">
+        <div>
+          <div class="post-stub-title">Why every small business needs a website in 2025</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span class="post-stub-date">Coming soon</span>
+          <span class="post-stub-arrow">→</span>
+        </div>
+      </div>
+      <div class="post-stub">
+        <div>
+          <div class="post-stub-title">How I automated my client onboarding in a weekend</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span class="post-stub-date">Coming soon</span>
+          <span class="post-stub-arrow">→</span>
+        </div>
+      </div>
+      <div class="post-stub">
+        <div>
+          <div class="post-stub-title">Chatbots for restaurants: what works and what doesn't</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span class="post-stub-date">Coming soon</span>
+          <span class="post-stub-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">Anup Rijal</span>
+    <p>© 2025 · anuprijal.com.np · All rights reserved</p>
+    <span class="status-dot">Available for projects</span>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const el = document.documentElement;
+      const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+      document.getElementById('progress').style.width = Math.min(pct, 100) + '%';
+    }, { passive: true });
+  </script>
+
 </body>
 </html>
